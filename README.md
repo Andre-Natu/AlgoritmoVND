@@ -4,6 +4,8 @@
 Um algoritmoVND em c++ para resolver um problema de Single Machine Scheduling with Sequence-Dependent Setup Times and Due Dates. Feito para a disciplina de APA(Análise e Projeto de
 Algoritmos).
 
+Por enquanto está incompleto, mas até o dia 13/09/2024 ele estará completo(ou eu vou ter morrido e reprovado na disciplina :/)
+
 ## Vizinhanças Usadas:
 
 - Algoritmo Guloso para geração da solução inicial
