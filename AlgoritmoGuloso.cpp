@@ -8,7 +8,7 @@ void calcularFuncaoObjetivo(PedidoData& pedidos, std::multimap<double, int>& fun
 
     // Preenchendo o multimap
     for (int i = 0; i < pedidos.getNumeroPedidos(); i++) {
-        double resultado = (pedidos.prazo[i] - pedidos.tempoProducao[i]) / static_cast<double>(pedidos.valorMulta[i]);
+        double resultado = (pedidos.prazo[i] - pedidos.tempoProducao[i]) /  static_cast<double>(pedidos.valorMulta[i]);
         funcaoObjetivo.insert(std::pair(resultado, i));
     }
 

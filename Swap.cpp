@@ -4,20 +4,25 @@
 #include <vector>
 
 
-bool fazerSwap(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int, 3>& melhorMultaTotal) {
+void fazerSwap(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int, 3>& melhorMultaTotal) {
     // como posicaoAnterior iniciando com 0, não é preciso de um if no começo para lidar
     // com o problema da matriz ter uma linha a mais que colunas.
     int pedidoAnterior = 0;
     int tempoAtual = 0;
-    bool trocarMelhor = false;
 
     for (int i = 0; i < pedidos.getNumeroPedidos() - 2; i++) {
         for (int j = i+2; j < pedidos.getNumeroPedidos(); j++) {
-            int novaMultaTotal = pedidos.getMultaTotal();
-            // remove todas as multas dos valores alterados.
-            for (int k = i; k < pedidos.getNumeroPedidos(); k++) {
+            int novaMultaTotal = 0;
 
-                novaMultaTotal -= solucao[k].multa;
+            // remove todas as multas dos valores alterados.
+            for (int k = 0; k < i; k++) {
+
+                novaMultaTotal += solucao[k].multa;
+
+                if (novaMultaTotal < 0) {
+                    std::cout << "Multa negativa: " << novaMultaTotal << std::endl;
+                    throw std::runtime_error("Forcing termination");
+                }
             }
 
             // calcula o novo tempo de conclusão do primeiro elemento trocando com o segundo.
@@ -91,8 +96,7 @@ bool fazerSwap(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<in
 
                 // i representa o segundo elemento da troca e i+1 o segundo pois eles foram trocados.
                 melhorMultaTotal[1] = i;
-                melhorMultaTotal[2] = i+1;
-                trocarMelhor = true;
+                melhorMultaTotal[2] = j;
             }
         }
         // Resetando o tempoAtual e o pedidoAnterior:
@@ -102,5 +106,4 @@ bool fazerSwap(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<in
 
     std::cout << "Menor multa: " << melhorMultaTotal[0] << std::endl;
 
-    return trocarMelhor;
 }

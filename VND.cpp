@@ -1,6 +1,8 @@
 #include "VND.h"
 #include <array>
 
+#include "opt2.h"
+#include "ReInsert.h"
 #include "Swap.h"
 #include "SwapAdjacencia.h"
 
@@ -10,12 +12,6 @@ void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
     // e o terceiro valor é o index da segunda posição.
     std::array melhorMultaTotal = { pedidos.getMultaTotal(), 0, 0 };
 
-    fazerSwapAdjacencia(pedidos, solucao, melhorMultaTotal);
-    trocarElementos(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
-
-    fazerSwap(pedidos, solucao, melhorMultaTotal);
-    trocarElementos(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
-/*
     int k = 1;
     // 4 é a quantidade de vizinhanças que exitem no VND.
     while ( k <= 4) {
@@ -28,10 +24,10 @@ void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
                 fazerSwap(pedidos, solucao, melhorMultaTotal);
                     break;
             case 3:
-                // implementar o 2-opt.
+                fazerOPT(pedidos, solucao, melhorMultaTotal);
                     break;
             case 4:
-                // implementar o re-insertion.
+                fazerReInsert(pedidos, solucao, melhorMultaTotal);
                     break;
             default:
                 // não existe possibilidade de cair aq.
@@ -39,13 +35,26 @@ void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
         }
 
         if ( melhorMultaTotal[0] < pedidos.getMultaTotal() ) {
+
+            switch (k) {
+                case 3:
+                    inverterElementos(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
+                    break;;
+                case 4:
+                    reInserirElemento(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
+                    break;;
+                default:
+                    // para os casos do swap.
+                    trocarElementos(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
+                    break;;
+            }
             // faz o swap de fato.
             pedidos.setMultaTotal(melhorMultaTotal[0]);
-            trocarElementos(melhorMultaTotal[1],melhorMultaTotal[2],solucao, pedidos);
+            k = 1;
         } else {
             k++;
         }
     }
-    */
+
 }
 

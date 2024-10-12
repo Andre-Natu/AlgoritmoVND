@@ -3,20 +3,27 @@
 #include "PedidoData.h"
 
 void trocarElementos(const int primeiroElemento, const int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
+
+    int tempoAtual;
     int pedidoAnterior = solucao[primeiroElemento].indexPedidoAnterior;
-    // É pedidoAnterior -1, porque o pedidoAnterior possui +1 do valor original devido
-    // à matriz que possui uma linha a mais que colunas.
-    int tempoAtual = solucao[pedidoAnterior -1].tempoConclusao;
+    // If para impedir que o programa pegue um pedido −1.
+
+    if (pedidoAnterior > 0) {
+        tempoAtual = solucao[pedidoAnterior -1].tempoConclusao;
+    }else {
+        tempoAtual = solucao[pedidoAnterior].tempoConclusao;
+    }
 
     // troca os dois valores de lugar
-    const Solucao temp = solucao[primeiroElemento];
-    solucao[primeiroElemento] = solucao[segundoElemento];
-    solucao[segundoElemento] = temp;
+    const int indexTemp = solucao[primeiroElemento].indexPedido;
+    solucao[primeiroElemento].indexPedido = solucao[segundoElemento].indexPedido;
+    solucao[segundoElemento].indexPedido = indexTemp;
 
     // recalcula a solução
     for(int i = primeiroElemento; i < pedidos.getNumeroPedidos(); i++) {
         // faz a passagem do tempo e registra o tempo de conclusão do pedido.
         tempoAtual += pedidos.matrizTempoTransicao[pedidoAnterior][solucao[i].indexPedido];
+
         tempoAtual += pedidos.tempoProducao[solucao[i].indexPedido];
 
         // armazena os valores no struct solucao.
@@ -25,6 +32,7 @@ void trocarElementos(const int primeiroElemento, const int segundoElemento, std:
         solucao[i].multa = std::max(0,
             pedidos.valorMulta[solucao[i].indexPedido] *
             (solucao[i].tempoConclusao - pedidos.prazo[solucao[i].indexPedido]));
+
 
         pedidoAnterior = solucao[i].indexPedido +1;
     }
@@ -40,12 +48,17 @@ void fazerSwapAdjacencia(PedidoData& pedidos, std::vector<Solucao>& solucao, std
     int tempoAtual = 0;
 
     for (int i = 0; i < pedidos.getNumeroPedidos() - 1; i++) {
-        int novaMultaTotal = pedidos.getMultaTotal();
+        int novaMultaTotal = 0;
 
         // remove todas as multas dos valores alterados.
-        for (int j = i; j < pedidos.getNumeroPedidos(); j++) {
+        for (int j = 0; j < i; j++) {
 
-            novaMultaTotal -= solucao[j].multa;
+            novaMultaTotal += solucao[j].multa;
+
+            if (novaMultaTotal < 0) {
+                std::cout << "Multa negativa: " << novaMultaTotal << std::endl;
+                throw std::runtime_error("Forcing termination");
+            }
         }
 
         // calcula o novo tempo de conclusão do elemento trocando com o elemento da frente.

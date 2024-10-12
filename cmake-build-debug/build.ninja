@@ -85,6 +85,24 @@ build CMakeFiles/ProjetoAPA.dir/VND.cpp.obj: CXX_COMPILER__ProjetoAPA_unscanned_
   OBJECT_DIR = CMakeFiles\ProjetoAPA.dir
   OBJECT_FILE_DIR = CMakeFiles\ProjetoAPA.dir
 
+build CMakeFiles/ProjetoAPA.dir/opt2.cpp.obj: CXX_COMPILER__ProjetoAPA_unscanned_Debug C$:/Users/sousa/CLionProjects/ProjetoAPA/opt2.cpp || cmake_object_order_depends_target_ProjetoAPA
+  DEP_FILE = CMakeFiles\ProjetoAPA.dir\opt2.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ProjetoAPA.dir
+  OBJECT_FILE_DIR = CMakeFiles\ProjetoAPA.dir
+
+build CMakeFiles/ProjetoAPA.dir/ReInsert.cpp.obj: CXX_COMPILER__ProjetoAPA_unscanned_Debug C$:/Users/sousa/CLionProjects/ProjetoAPA/ReInsert.cpp || cmake_object_order_depends_target_ProjetoAPA
+  DEP_FILE = CMakeFiles\ProjetoAPA.dir\ReInsert.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ProjetoAPA.dir
+  OBJECT_FILE_DIR = CMakeFiles\ProjetoAPA.dir
+
+build CMakeFiles/ProjetoAPA.dir/ILS.cpp.obj: CXX_COMPILER__ProjetoAPA_unscanned_Debug C$:/Users/sousa/CLionProjects/ProjetoAPA/ILS.cpp || cmake_object_order_depends_target_ProjetoAPA
+  DEP_FILE = CMakeFiles\ProjetoAPA.dir\ILS.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ProjetoAPA.dir
+  OBJECT_FILE_DIR = CMakeFiles\ProjetoAPA.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ProjetoAPA
@@ -93,7 +111,7 @@ build CMakeFiles/ProjetoAPA.dir/VND.cpp.obj: CXX_COMPILER__ProjetoAPA_unscanned_
 #############################################
 # Link the executable ProjetoAPA.exe
 
-build ProjetoAPA.exe: CXX_EXECUTABLE_LINKER__ProjetoAPA_Debug CMakeFiles/ProjetoAPA.dir/main.cpp.obj CMakeFiles/ProjetoAPA.dir/PedidoData.cpp.obj CMakeFiles/ProjetoAPA.dir/AlgoritmoGuloso.cpp.obj CMakeFiles/ProjetoAPA.dir/SwapAdjacencia.cpp.obj CMakeFiles/ProjetoAPA.dir/Swap.cpp.obj CMakeFiles/ProjetoAPA.dir/VND.cpp.obj
+build ProjetoAPA.exe: CXX_EXECUTABLE_LINKER__ProjetoAPA_Debug CMakeFiles/ProjetoAPA.dir/main.cpp.obj CMakeFiles/ProjetoAPA.dir/PedidoData.cpp.obj CMakeFiles/ProjetoAPA.dir/AlgoritmoGuloso.cpp.obj CMakeFiles/ProjetoAPA.dir/SwapAdjacencia.cpp.obj CMakeFiles/ProjetoAPA.dir/Swap.cpp.obj CMakeFiles/ProjetoAPA.dir/VND.cpp.obj CMakeFiles/ProjetoAPA.dir/opt2.cpp.obj CMakeFiles/ProjetoAPA.dir/ReInsert.cpp.obj CMakeFiles/ProjetoAPA.dir/ILS.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ProjetoAPA.dir

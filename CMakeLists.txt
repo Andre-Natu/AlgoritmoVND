@@ -13,4 +13,10 @@ add_executable(ProjetoAPA main.cpp
         Swap.cpp
         Swap.h
         VND.cpp
-        VND.h)
+        VND.h
+        opt2.cpp
+        opt2.h
+        ReInsert.cpp
+        ReInsert.h
+        ILS.cpp
+        ILS.h)
