@@ -51,13 +51,7 @@ void fazerOPT(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int
 
             // adiciona apenas as multas dos valores que não foram alterados.
             for (int k = 0; k <= i; k++) {
-
                 novaMultaTotal += solucao[k].multa;
-
-                if (novaMultaTotal < 0) {
-                    std::cout << "Multa negativa: " << novaMultaTotal << std::endl;
-                    throw std::runtime_error("Forcing termination");
-                }
             }
 
             // simula a inversão dos elementos entre o i e o j.
@@ -103,6 +97,4 @@ void fazerOPT(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int
             }
         }
     }
-
-    std::cout << "Menor multa: " << melhorMultaTotal[0] << std::endl;
 }

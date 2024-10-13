@@ -50,13 +50,7 @@ void fazerSwapAdjacencia(PedidoData& pedidos, std::vector<Solucao>& solucao, std
 
         // remove todas as multas dos valores alterados.
         for (int j = 0; j < i; j++) {
-
             novaMultaTotal += solucao[j].multa;
-
-            if (novaMultaTotal < 0) {
-                std::cout << "Multa negativa: " << novaMultaTotal << std::endl;
-                throw std::runtime_error("Forcing termination");
-            }
         }
 
         // calcula o novo tempo de conclusão do elemento trocando com o elemento da frente.
@@ -105,5 +99,4 @@ void fazerSwapAdjacencia(PedidoData& pedidos, std::vector<Solucao>& solucao, std
             melhorMultaTotal[2] = i+1;
         }
     }
-    std::cout << "Menor multa: " << melhorMultaTotal[0] << std::endl;
 }

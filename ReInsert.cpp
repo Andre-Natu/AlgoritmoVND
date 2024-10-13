@@ -3,9 +3,10 @@
 #include "PedidoData.h"
 #include <vector>
 
-void reInserirElemento(const int primeiroElemento, int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
+int reInserirElemento(const int primeiroElemento, int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
     int tempoAtual = 0;
     int pedidoAnterior = 0;
+    int novaMultaTotal = 0;
 
 
     // Faz a remoção e a inserção do elemento no vetor solução.
@@ -16,18 +17,11 @@ void reInserirElemento(const int primeiroElemento, int segundoElemento, std::vec
         segundoElemento--;
     }
 
-    auto it = solucao.begin() + segundoElemento ;
-    // É −1 por que o vetor solução acabou de diminuir de tamanho.
+    const auto it = solucao.begin() + segundoElemento ;
     solucao.insert(it, indexTemp);
 
     // recalcula a solução
     for(int i = 0; i < pedidos.getNumeroPedidos(); i++) {
-
-        // Verificar se os índices estão dentro dos limites
-        if (solucao[i].indexPedido >= pedidos.getNumeroPedidos()) {
-            std::cerr << "Erro: Indices fora dos limites durante o recalculo" << std::endl;
-            throw std::runtime_error("Forcing termination");
-        }
 
         // faz a passagem do tempo e registra o tempo de conclusão do pedido.
         tempoAtual += pedidos.matrizTempoTransicao[pedidoAnterior][solucao[i].indexPedido];
@@ -40,9 +34,14 @@ void reInserirElemento(const int primeiroElemento, int segundoElemento, std::vec
             pedidos.valorMulta[solucao[i].indexPedido] *
             (solucao[i].tempoConclusao - pedidos.prazo[solucao[i].indexPedido]));
 
+        // calculando a nova multa da mudança.
+        novaMultaTotal += std::max(0,
+              pedidos.valorMulta[solucao[i].indexPedido] *
+              (tempoAtual - pedidos.prazo[solucao[i].indexPedido]));
 
         pedidoAnterior = solucao[i].indexPedido +1;
     }
+    return novaMultaTotal;
 }
 
 void fazerReInsert(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int, 3>& melhorMultaTotal) {
@@ -163,6 +162,4 @@ void fazerReInsert(PedidoData& pedidos, std::vector<Solucao>& solucao, std::arra
             }
         }
     }
-    std::cout << "Melhor multa: " << melhorMultaTotal[0] << std::endl;
-
 }

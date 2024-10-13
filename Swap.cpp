@@ -103,7 +103,4 @@ void fazerSwap(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<in
         tempoAtual = solucao[i].tempoConclusao;
         pedidoAnterior = solucao[i].indexPedido + 1;
     }
-
-    std::cout << "Menor multa: " << melhorMultaTotal[0] << std::endl;
-
 }

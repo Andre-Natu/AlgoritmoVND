@@ -1,6 +1,5 @@
 #include "VND.h"
 #include <array>
-
 #include "opt2.h"
 #include "ReInsert.h"
 #include "Swap.h"
