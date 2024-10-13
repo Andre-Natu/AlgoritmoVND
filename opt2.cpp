@@ -69,12 +69,13 @@ void fazerOPT(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int
                   pedidos.valorMulta[solucao[k].indexPedido] *
                   (tempoAtual - pedidos.prazo[solucao[k].indexPedido]));
 
+
+                pedidoAnterior = solucao[k].indexPedido +1;
+
                 // if para parar o loop se a solução for ruim.
                 if (novaMultaTotal >= melhorMultaTotal[0]) {
                     k = i;
                 }
-                pedidoAnterior = solucao[k].indexPedido +1;
-
             }
 
             // Calcula o novo tempo de conclusão dos elementos posteriores a inversão.

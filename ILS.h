@@ -2,8 +2,8 @@
 #define ILS_H
 #include "PedidoData.h"
 
-void calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao);
+int calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao, int melhorMultaTotal);
 
-bool criterioAceitacao(PedidoData& pedidos,std::vector<Solucao>& solucao, std::vector<Solucao>& novaSolucao);
+bool criterioAceitacao(PedidoData& pedidos,std::vector<Solucao>& solucao, std::vector<Solucao>& novaSolucao, int melhorMultaNovaSolucao, int melhorMultaTotal);
 
 #endif //ILS_H

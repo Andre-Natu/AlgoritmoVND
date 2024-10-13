@@ -7,10 +7,10 @@
 #include "SwapAdjacencia.h"
 
 
-void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
+int calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao, int melhorMultaOriginal) {
     // 1 valor é o valor da multa, o segundo é o index da primeira posição
     // e o terceiro valor é o index da segunda posição.
-    std::array melhorMultaTotal = { pedidos.getMultaTotal(), 0, 0 };
+    std::array melhorMultaTotal = { melhorMultaOriginal, 0, 0 };
 
     int k = 1;
     // 4 é a quantidade de vizinhanças que exitem no VND.
@@ -34,7 +34,7 @@ void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
                     break;;
         }
 
-        if ( melhorMultaTotal[0] < pedidos.getMultaTotal() ) {
+        if ( melhorMultaTotal[0] < melhorMultaOriginal ) {
 
             switch (k) {
                 case 3:
@@ -50,11 +50,13 @@ void calcularSolucaoVND(PedidoData& pedidos, std::vector<Solucao>& solucao) {
             }
             // faz o swap de fato.
             pedidos.setMultaTotal(melhorMultaTotal[0]);
+            melhorMultaOriginal = melhorMultaTotal[0];
             k = 1;
         } else {
             k++;
         }
     }
 
+    return melhorMultaOriginal;
 }
 

@@ -3,28 +3,30 @@
 #include <random>
 
 #include "AlgoritmoGuloso.h"
+#include "opt2.h"
+#include "ReInsert.h"
 #include "SwapAdjacencia.h"
 #include "VND.h"
 
-bool criterioAceitacao(PedidoData& pedidos, std::vector<Solucao>& solucao , std::vector<Solucao>& novaSolucao) {
+bool criterioAceitacao(PedidoData& pedidos, std::vector<Solucao>& solucao , std::vector<Solucao>& novaSolucao,int melhorMultaNovaSolucao, int melhorMultaTotal) {
 
-    int novaMultaTotal = 0;
-    int multaAntiga = 0;
-    for (int i = 0; i < pedidos.getNumeroPedidos(); i++) {
-        novaMultaTotal += novaSolucao[i].multa;
-        multaAntiga += solucao[i].multa;
-    }
+
+    std::cout << "Valor nova Multa ILS: " << melhorMultaNovaSolucao << std::endl;
+    std::cout << "Valor Multa VND Antiga: " << melhorMultaTotal << std::endl;
+    std::cout << "Valor Melhor Multa total faz o L: " << pedidos.getMultaTotal() << std::endl;
+
+
 
     //  se a nova solução for melhor, copia ela para a solução.
-    if (novaMultaTotal < multaAntiga) {
+    if (melhorMultaNovaSolucao < melhorMultaTotal) {
         std::copy(novaSolucao.begin(), novaSolucao.end(), solucao.begin());
-        pedidos.setMultaTotal(novaMultaTotal);
+        pedidos.setMultaTotal(melhorMultaNovaSolucao);
         return true;
     }
     return false;
 }
 
-void calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao) {
+int calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao, int melhorMultaTotal) {
     // busca local e solucao inicial
     //calcularSolucaoGulosa(pedidos, solucao);
     //calcularSolucaoVND(pedidos, solucao);
@@ -42,15 +44,20 @@ void calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao) {
         const int numeroAleatorio3 = distribution(gen);
         const int numeroAleatorio4 = distribution(gen);
 
+
         // Perturbação
-        trocarElementos(numeroAleatorio1,numeroAleatorio2,novaSolucao, pedidos);
-        trocarElementos(numeroAleatorio3,numeroAleatorio4,novaSolucao, pedidos);
+        int melhorMultaNovaSolucao = trocarElementos(numeroAleatorio1,numeroAleatorio2,novaSolucao, pedidos);
+        melhorMultaNovaSolucao = trocarElementos(numeroAleatorio3,numeroAleatorio4,novaSolucao, pedidos);
+
+        std::cout << "Multa da nova solucao apos o swap: " << melhorMultaNovaSolucao << std::endl;
+        std::cout << "Multa Antiga sem mudar: " << melhorMultaTotal << std::endl;
 
         // Busca Local
-        calcularSolucaoVND(pedidos, novaSolucao);
+        melhorMultaNovaSolucao = calcularSolucaoVND(pedidos, novaSolucao, melhorMultaNovaSolucao);
 
         // testa para ver se a nova solução é melhor, se for, redefine o criterio de parada.
-        if (criterioAceitacao(pedidos,solucao, novaSolucao)) {
+        if (criterioAceitacao(pedidos,solucao, novaSolucao, melhorMultaNovaSolucao, melhorMultaTotal)) {
+            melhorMultaTotal = melhorMultaNovaSolucao;
             k = 0;
         } else {
             k++;
@@ -58,4 +65,5 @@ void calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao) {
     }
 
 
+    return melhorMultaTotal;
 }

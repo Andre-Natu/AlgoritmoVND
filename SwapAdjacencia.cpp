@@ -2,17 +2,10 @@
 #include <array>
 #include "PedidoData.h"
 
-void trocarElementos(const int primeiroElemento, const int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
-
-    int tempoAtual;
-    int pedidoAnterior = solucao[primeiroElemento].indexPedidoAnterior;
-    // If para impedir que o programa pegue um pedido −1.
-
-    if (pedidoAnterior > 0) {
-        tempoAtual = solucao[pedidoAnterior -1].tempoConclusao;
-    }else {
-        tempoAtual = solucao[pedidoAnterior].tempoConclusao;
-    }
+int trocarElementos(const int primeiroElemento, const int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
+    int tempoAtual = 0;
+    int pedidoAnterior = 0;
+    int novaMultaTotal = 0;
 
     // troca os dois valores de lugar
     const int indexTemp = solucao[primeiroElemento].indexPedido;
@@ -20,10 +13,9 @@ void trocarElementos(const int primeiroElemento, const int segundoElemento, std:
     solucao[segundoElemento].indexPedido = indexTemp;
 
     // recalcula a solução
-    for(int i = primeiroElemento; i < pedidos.getNumeroPedidos(); i++) {
+    for(int i = 0; i < pedidos.getNumeroPedidos(); i++) {
         // faz a passagem do tempo e registra o tempo de conclusão do pedido.
         tempoAtual += pedidos.matrizTempoTransicao[pedidoAnterior][solucao[i].indexPedido];
-
         tempoAtual += pedidos.tempoProducao[solucao[i].indexPedido];
 
         // armazena os valores no struct solucao.
@@ -33,9 +25,14 @@ void trocarElementos(const int primeiroElemento, const int segundoElemento, std:
             pedidos.valorMulta[solucao[i].indexPedido] *
             (solucao[i].tempoConclusao - pedidos.prazo[solucao[i].indexPedido]));
 
+        // calculando a nova multa da mudança.
+        novaMultaTotal += std::max(0,
+              pedidos.valorMulta[solucao[i].indexPedido] *
+              (tempoAtual - pedidos.prazo[solucao[i].indexPedido]));
 
         pedidoAnterior = solucao[i].indexPedido +1;
     }
+    return novaMultaTotal;
 }
 
 void fazerSwapAdjacencia(PedidoData& pedidos, std::vector<Solucao>& solucao, std::array<int, 3>& melhorMultaTotal) {
