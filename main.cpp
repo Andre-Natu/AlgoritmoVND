@@ -17,7 +17,6 @@ int main() {
 
     auto inicio = std::chrono::high_resolution_clock::now();
     calcularSolucaoGulosa(pedidos, solucao);
-
     // Calcula a duração
     auto fim = std::chrono::high_resolution_clock::now();
     const std::chrono::duration<double, std::micro> tempoGuloso = fim - inicio;
@@ -29,7 +28,6 @@ int main() {
     // calculo do VND
     inicio = std::chrono::high_resolution_clock::now();
     melhorMultaOriginal = calcularSolucaoVND(pedidos, solucao, melhorMultaOriginal);
-
     // Calcula a duracao
     fim = std::chrono::high_resolution_clock::now();
     const std::chrono::duration<double, std::micro> tempoVND = fim - inicio;
@@ -37,19 +35,17 @@ int main() {
     // Calculo da ILS
     inicio = std::chrono::high_resolution_clock::now();
     int melhorMultaNovaSolucao = calcularSolucaoILS(pedidos, solucao, melhorMultaOriginal);
-
+    pedidos.setMultaTotal(melhorMultaNovaSolucao);
     // Calcula a duracao
     fim = std::chrono::high_resolution_clock::now();
     const std::chrono::duration<double, std::micro> tempoILS = fim - inicio;
 
-    std::cout << "Melhor multa Antiga: " << melhorMultaOriginal << std::endl;
-    std::cout << "Melhor multa nova era games: " << melhorMultaNovaSolucao << std::endl;
+    std::cout << "Melhor multa: " << melhorMultaNovaSolucao << std::endl;
     std::cout << "Melhor multa final: " << pedidos.getMultaTotal() << std::endl;
 
-    std::cout << "O Guloso demorou " << tempoGuloso.count() << " ns." << std::endl;
-    std::cout << "O VND demorou " << tempoVND.count() << " ns." << std::endl;
-    std::cout << "A meta-heuristica demorou " << tempoILS.count() << " ns." << std::endl;
-
+    std::cout << "O Guloso demorou " << tempoGuloso.count() << " microseconds." << std::endl;
+    std::cout << "O VND demorou " << tempoVND.count() << " microseconds." << std::endl;
+    std::cout << "A meta-heuristica demorou " << tempoILS.count() << " microseconds." << std::endl;
 
     // apagar essa linha do código.
     // std::array melhorMultaTotal = { pedidos.getMultaTotal(), 0, 0 };

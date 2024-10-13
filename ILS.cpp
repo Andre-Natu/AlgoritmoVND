@@ -43,11 +43,15 @@ int calcularSolucaoILS(PedidoData& pedidos, std::vector<Solucao>& solucao, int m
         const int numeroAleatorio2 = distribution(gen);
         const int numeroAleatorio3 = distribution(gen);
         const int numeroAleatorio4 = distribution(gen);
+        const int numeroAleatorio5 = distribution(gen);
+        const int numeroAleatorio6 = distribution(gen);
 
 
+        int melhorMultaNovaSolucao = melhorMultaTotal;
         // Perturbação
-        int melhorMultaNovaSolucao = trocarElementos(numeroAleatorio1,numeroAleatorio2,novaSolucao, pedidos);
+        melhorMultaNovaSolucao = trocarElementos(numeroAleatorio1,numeroAleatorio2,novaSolucao, pedidos);
         melhorMultaNovaSolucao = trocarElementos(numeroAleatorio3,numeroAleatorio4,novaSolucao, pedidos);
+        melhorMultaNovaSolucao = trocarElementos(numeroAleatorio5,numeroAleatorio6,novaSolucao, pedidos);
 
         std::cout << "Multa da nova solucao apos o swap: " << melhorMultaNovaSolucao << std::endl;
         std::cout << "Multa Antiga sem mudar: " << melhorMultaTotal << std::endl;

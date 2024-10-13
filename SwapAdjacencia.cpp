@@ -14,6 +14,7 @@ int trocarElementos(const int primeiroElemento, const int segundoElemento, std::
 
     // recalcula a solução
     for(int i = 0; i < pedidos.getNumeroPedidos(); i++) {
+
         // faz a passagem do tempo e registra o tempo de conclusão do pedido.
         tempoAtual += pedidos.matrizTempoTransicao[pedidoAnterior][solucao[i].indexPedido];
         tempoAtual += pedidos.tempoProducao[solucao[i].indexPedido];

@@ -3,18 +3,32 @@
 #include "PedidoData.h"
 #include <vector>
 
-void reInserirElemento(const int primeiroElemento, const int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
+void reInserirElemento(const int primeiroElemento, int segundoElemento, std::vector<Solucao>& solucao, const PedidoData& pedidos) {
     int tempoAtual = 0;
     int pedidoAnterior = 0;
+
 
     // Faz a remoção e a inserção do elemento no vetor solução.
     const Solucao indexTemp = solucao[primeiroElemento];
     solucao.erase(solucao.begin() + primeiroElemento);
+
+    if (segundoElemento >= solucao.size()) {
+        segundoElemento--;
+    }
+
+    auto it = solucao.begin() + segundoElemento ;
     // É −1 por que o vetor solução acabou de diminuir de tamanho.
-    solucao.insert(solucao.begin() + (segundoElemento -1 ), indexTemp);
+    solucao.insert(it, indexTemp);
 
     // recalcula a solução
     for(int i = 0; i < pedidos.getNumeroPedidos(); i++) {
+
+        // Verificar se os índices estão dentro dos limites
+        if (solucao[i].indexPedido >= pedidos.getNumeroPedidos()) {
+            std::cerr << "Erro: Indices fora dos limites durante o recalculo" << std::endl;
+            throw std::runtime_error("Forcing termination");
+        }
+
         // faz a passagem do tempo e registra o tempo de conclusão do pedido.
         tempoAtual += pedidos.matrizTempoTransicao[pedidoAnterior][solucao[i].indexPedido];
         tempoAtual += pedidos.tempoProducao[solucao[i].indexPedido];
